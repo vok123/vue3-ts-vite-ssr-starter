@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "ESNext",
+    "sourceMap": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "types": ["element-plus", "axios"],
+    "paths": {
+      "@/*": ["src/*"],
+      "@img/*": ["src/assets/img/*"]
+    }
+  },
+  "include": ["src"]
+}
