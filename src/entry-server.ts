@@ -1,7 +1,7 @@
 import { createSSRApp } from 'vue';
 import renderer from '@vue/server-renderer';
 import App from './app.vue';
-import el from 'element-plus/lib/index.esm';
+import el from 'element-plus';
 import createRouter from './router/';
 import createStore from './store/';
 import { isPromise } from './utils';

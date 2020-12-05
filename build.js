@@ -1,7 +1,7 @@
+const path = require('path');
 const { ssrBuild, build } = require('vite');
 const replace = require('@rollup/plugin-replace');
 const rollupAlias = require('@rollup/plugin-alias');
-const path = require('path');
 
 const aliasConfig = {
   '@': 'src',
@@ -11,7 +11,7 @@ const aliasConfig = {
 (async () => {
 
   const aliasPlugin = rollupAlias({
-    entries: Object.keys(aliasConfig).map(key => {
+    entries: Object.keys(aliasConfig).map((key) => {
       return { find: key, replacement: path.resolve(__dirname, aliasConfig[key]) };
     })
   });
@@ -20,13 +20,14 @@ const aliasConfig = {
     outDir: 'dist/client',
     rollupInputOptions: {
       input: 'index.html',
-      plugins: [aliasPlugin]
+      pluginsPreBuild: [aliasPlugin]
     },
     emitManifest: true,
     env: {
       VITE_VUE_ENV: 'client'
     }
   });
+
   await ssrBuild({
     outDir: 'dist/server',
     assetsDir: '',

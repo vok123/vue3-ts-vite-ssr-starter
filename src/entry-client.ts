@@ -3,7 +3,7 @@ import App from './app.vue';
 import '@/assets/css/index.css';
 import createRouter from './router/';
 import createStore from './store/';
-import el from 'element-plus/lib/index.esm';
+import el from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import { isPromise } from './utils';
 

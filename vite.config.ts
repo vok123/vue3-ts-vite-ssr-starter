@@ -4,11 +4,9 @@ const aliasConfig: Record<string, string> = {
   '@/': 'src/',
   '@img/': 'src/assets/img/'
 };
+
 export default {
   port: 80,
-  optimizeDeps: {
-    include: ['element-plus/lib/index.esm']
-  },
   resolvers: [
     {
       alias (id) {
