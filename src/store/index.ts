@@ -1,4 +1,4 @@
-import { createStore } from 'vuex';
+import { createStore, useStore as vuexUseStore } from 'vuex';
 import market, { IMarketState, IMarketStore } from './modules/market';
 import user, { IUserState, IUserStore } from './modules/user';
 
@@ -17,6 +17,10 @@ export default () => {
       market: market()
     }
   });
+};
+
+export const useStore = () => {
+  return vuexUseStore<IRootState>();
 };
 
 declare module '@vue/runtime-core' {

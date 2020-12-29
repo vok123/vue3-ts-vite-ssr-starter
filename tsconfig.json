@@ -5,6 +5,7 @@
     "sourceMap": true,
     "strict": true,
     "noUnusedLocals": true,
+    "jsx": "preserve",
     "noImplicitReturns": true,
     "moduleResolution": "node",
     "esModuleInterop": true,

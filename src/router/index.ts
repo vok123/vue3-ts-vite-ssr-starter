@@ -19,7 +19,7 @@ export default function (type?: 'client' | 'server') {
       {
         path: '/market',
         name: 'market',
-        component: () => import('@/views/market.vue')
+        component: () => import('@/views/market')
       }
     ]
   });

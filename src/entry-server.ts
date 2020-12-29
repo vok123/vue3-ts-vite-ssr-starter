@@ -56,6 +56,7 @@ server.get('*', (req: any, res: any) => {
     })();
   });
 });
+
 server.listen(80, () => {
   console.log('started server at http://localhost');
 });
