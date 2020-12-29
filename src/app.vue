@@ -12,7 +12,9 @@
   <hr>
   <div class="container">
     <router-view v-slot="{ Component }">
-      <component :is="Component" />
+      <Suspense>
+        <component :is="Component" />
+      </Suspense>
     </router-view>
   </div>
 </template>
