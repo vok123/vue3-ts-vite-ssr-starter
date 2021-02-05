@@ -1,6 +1,5 @@
 <template>
   <div class="index">
-    Index Page
     <el-switch v-model="value" active-color="#13ce66" inactive-color="#ff4949">switch</el-switch>
   </div>
 </template>

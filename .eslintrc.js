@@ -50,7 +50,7 @@ module.exports = {
         argsIgnorePattern: "^h$",
       },
     ],
-    // 设置typescript-eslint规则
+    "eslint@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-this-alias": 0,
     "@typescript-eslint/no-inferrable-types": 0,

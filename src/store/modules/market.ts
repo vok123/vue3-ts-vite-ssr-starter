@@ -1,7 +1,6 @@
 import Axios from 'axios';
 import { Module, Store } from 'vuex';
 import { IRootState } from '..';
-
 interface IFruitItem {
   id: number;
   name: string;

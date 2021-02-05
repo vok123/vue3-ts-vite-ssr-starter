@@ -1,25 +1,13 @@
+import path from 'path';
 import { UserConfig } from 'vite';
-
-const aliasConfig: Record<string, string> = {
-  '@/': 'src/',
-  '@img/': 'src/assets/img/'
-};
+const vueJsxPlugin = require('@vitejs/plugin-vue-jsx');
+const vuePlugin = require('@vitejs/plugin-vue');
 
 export default {
   port: 80,
-  resolvers: [
-    {
-      alias (id) {
-        let path = '';
-        Object.keys(aliasConfig).find(key => {
-          if (id.startsWith(key)) {
-            const dir = '/' + aliasConfig[key];
-            path = dir + id.slice(key.length);
-          }
-          return !!path;
-        });
-        return path;
-      }
-    }
-  ]
+  plugins: [vuePlugin(), vueJsxPlugin()],
+  alias: {
+    '@': path.resolve(__dirname, 'src'),
+    '@img': path.resolve(__dirname, 'src/assets/img')
+  }
 } as UserConfig;

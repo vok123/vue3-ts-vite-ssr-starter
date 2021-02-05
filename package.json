@@ -1,39 +1,46 @@
 {
   "name": "vue3-ts-vite-ssr-starter",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Use vue3 vite typescript eslint SSR vuex vue-router element-plus scss",
   "author": "vok123",
   "scripts": {
     "dev": "npm-run-all -p start lint",
-    "start": "vite",
+    "start": "node server",
     "lint": "esw -w --cache --color --ext .ts,.vue,.tsx src/ --cache-location node_modules",
-    "build": "node build.js",
-    "serve": "node dist/server/entry-server",
+    "build": "yarn build:client && yarn build:server",
+    "build:client": "vite build --ssrManifest --outDir dist/client",
+    "build:server": "vite build --ssr src/entry-server.js --outDir dist/server",
+    "serve": "cross-env NODE_ENV=production node server",
     "server:data": "node server-data.js",
     "test": "npm-run-all -s build serve"
   },
   "dependencies": {
     "axios": "^0.21.0",
-    "element-plus": "^1.0.1-beta.17",
-    "vue": "^3.0.4",
-    "vue-router": "^4.0.0-rc.6",
-    "vuex": "^4.0.0-rc.2"
+    "element-plus": "^1.0.2-beta.31",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.0",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.1",
     "@rollup/plugin-replace": "^2.3.4",
+    "@types/node": "^14.14.25",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",
-    "@vue/compiler-sfc": "^3.0.4",
-    "@vue/server-renderer": "^3.0.4",
+    "@vitejs/plugin-vue": "^1.1.4",
+    "@vitejs/plugin-vue-jsx": "^1.0.2",
+    "@vue/compiler-sfc": "^3.0.5",
+    "@vue/server-renderer": "^3.0.5",
+    "compression": "^1.7.4",
+    "cross-env": "^7.0.3",
     "eslint": "^7.14.0",
-    "eslint-plugin-vue": "^7.2.0",
+    "eslint-plugin-vue": "^7.5.0",
     "eslint-watch": "^7.0.0",
     "express": "^4.17.1",
     "npm-run-all": "^4.1.5",
     "sass": "^1.30.0",
     "typescript": "^4.1.2",
-    "vite": "^1.0.0-rc.13"
+    "vite": "^2.0.0-beta.64"
   },
   "repository": {
     "type": "git",

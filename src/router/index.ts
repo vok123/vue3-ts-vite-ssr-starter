@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, createMemoryHistory } from 'vue-router';
 
-export default function (type?: 'client' | 'server') {
-  const routerHistory = type === 'client' ? createWebHistory() : createMemoryHistory();
+export default function () {
+  const routerHistory = import.meta.env.SSR === false ? createWebHistory() : createMemoryHistory();
 
   return createRouter({
     history: routerHistory,

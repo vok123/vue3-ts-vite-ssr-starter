@@ -7,7 +7,7 @@ import el from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import { isPromise } from './utils';
 
-const router = createRouter('client');
+const router = createRouter();
 const store = createStore();
 
 const app = createSSRApp(App);
@@ -49,7 +49,6 @@ router.beforeResolve((to, from, next) => {
     Promise.all(asyncDataFuncs).then(() => {
       next();
     });
-    // 这里如果有加载指示器 (loading indicator)，就触发
   } catch (err) {
     next(err);
   }
