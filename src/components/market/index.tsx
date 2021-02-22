@@ -2,8 +2,8 @@ import { useStore } from '@/store';
 import { defineComponent } from 'vue';
 import '@/scss/market.scss';
 
-export default defineComponent({
-  name: 'Market',
+export const market = defineComponent({
+  name: 'Market-Jsx',
   async setup() {
     const store = useStore();
     await store.dispatch('market/getFruitList');
