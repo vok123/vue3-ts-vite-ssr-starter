@@ -3,14 +3,14 @@ import { defineComponent } from 'vue';
 import '@/scss/market.scss';
 
 export const market = defineComponent({
-  name: 'Market-Jsx',
+  name: 'MarketJsx',
   async setup() {
     const store = useStore();
     await store.dispatch('market/getFruitList');
     const { fruitList } = store.state.market;
 
     return () => (
-      <>
+      <div>
         <h2>FruitList</h2>
         <table class="table">
           <thead>
@@ -33,7 +33,7 @@ export const market = defineComponent({
             })}
           </tbody>
         </table>
-      </>
+      </div>
     );
   }
 });

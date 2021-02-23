@@ -1,14 +1,16 @@
-import { createSSRApp } from 'vue';
 import App from './app.vue';
-import '@/assets/css/index.css';
-import createRouter from './router/';
-import createStore from './store/';
 import el from 'element-plus';
-import 'element-plus/lib/theme-chalk/index.css';
+import '@/assets/css/index.css';
+import createStore from './store/';
+import { createSSRApp } from 'vue';
 import { isPromise } from './utils';
+import createRouter from './router/';
+import { sync } from 'vuex-router-sync';
+import 'element-plus/lib/theme-chalk/index.css';
 
 const router = createRouter();
 const store = createStore();
+sync(store, router);
 
 const app = createSSRApp(App);
 app.use(router).use(store);
@@ -19,7 +21,7 @@ router.beforeResolve((to, from, next) => {
   const matched = router.resolve(to).matched;
   const prevMatched = router.resolve(from).matched;
 
-  if (from && !from.name && process.env.NODE_ENV !== 'development') {
+  if (from && !from.name) {
     return next();
   }
   const activated = matched.filter((c, i) => {

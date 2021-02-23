@@ -1,9 +1,10 @@
-import { createSSRApp } from 'vue';
 import App from './app.vue';
 import el from 'element-plus';
-import createRouter from './router/';
+import { createSSRApp } from 'vue';
 import createStore from './store/';
 import { isPromise } from './utils';
+import createRouter from './router/';
+import { sync } from 'vuex-router-sync';
 import { renderToString } from '@vue/server-renderer';
 
 function renderPreloadLinks(modules, manifest) {
@@ -36,6 +37,7 @@ function renderPreloadLink(file) {
 export async function render(url, manifest) {
   const router = createRouter();
   const store = createStore();
+  sync(store, router);
   const app = createSSRApp(App);
   app.use(router).use(store).use(el);
   router.push(url);
