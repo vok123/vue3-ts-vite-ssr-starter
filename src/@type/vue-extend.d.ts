@@ -1,12 +1,13 @@
-import { ElLoading } from "element-plus/types/loading";
-import { ElMessageBox } from "element-plus/types/message-box";
-import { ElNotification } from "element-plus/types/notification";
-import { RouteRecordRaw } from "vue-router";
-import { IRootStore } from "../store";
+/* eslint-disable spaced-comment */
+import { IRootStore } from '../store';
+import { RouteRecordRaw } from 'vue-router';
+import type { IMessage } from 'element-plus/es/el-message/src/types.d';
+import { INotification } from 'element-plus/lib/el-notification/src/notification.type';
+import type { ILoadingInstance, ILoadingOptions } from 'element-plus/es/el-loading/src/loading.type';
 
 export interface IAsyncDataContext {
   route: RouteRecordRaw;
-  store: IRootStore
+  store: IRootStore;
 }
 declare module '@vue/runtime-core' {
   interface ComponentCustomOptions {
@@ -14,11 +15,8 @@ declare module '@vue/runtime-core' {
   }
 
   interface ComponentCustomProperties {
-    $loading: ElLoading;
-    $message: ElMessageBox;
-    $alert: ElMessageBox;
-    $confirm: ElMessageBox;
-    $prompt: ElMessageBox;
-    $notify: ElNotification;
+    $message: IMessage;
+    $notify: INotification;
+    $loading: (options?: ILoadingOptions) => ILoadingInstance;
   }
 }

@@ -4,7 +4,7 @@ import market, { IMarketState, IMarketStore } from './modules/market';
 import user, { IUserState, IUserStore } from './modules/user';
 
 interface IRouterExtends extends RouteLocationNormalized {
-  from: RouteLocationNormalizedLoaded
+  from: RouteLocationNormalizedLoaded;
 }
 export interface IRootState {
   user: IUserState;
@@ -36,7 +36,7 @@ export default () => {
       market: market()
     }
   });
-  
+
   return storeDispatchWarp(store);
 };
 

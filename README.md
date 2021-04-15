@@ -12,16 +12,16 @@ npm i
 npm run dev
 ```
 
-- test
+- preview
 ```bash 
-npm run test
-
-npm run server:data  // building api
+npm i
+npm run preview
 ```
 
 
 - build
 ```bash 
+npm i
 npm run build
 ```
 

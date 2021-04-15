@@ -1,11 +1,6 @@
-import Axios from 'axios';
+import { getFruitList, IFruitItem } from '@/api/market';
 import { Module, Store } from 'vuex';
 import { IRootState } from '..';
-interface IFruitItem {
-  id: number;
-  name: string;
-  price: number;
-}
 export interface IMarketState {
   fruitList: IFruitItem[];
 }
@@ -24,10 +19,8 @@ export default () => {
     actions: {
       async getFruitList({ commit }) {
         try {
-          const { data } = await Axios.get('http://localhost:5656/list');
-          if (data.code === 0) {
-            commit('updateFruitList', data.data);
-          }
+          const data = await getFruitList();
+          commit('updateFruitList', data);
         } catch (error) {
           console.log(error);
         }

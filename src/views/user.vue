@@ -44,14 +44,16 @@ export default defineComponent({
   methods: {
     submit() {
       if (!this.userName) {
-        this.$notify.error({
+        this.$notify({
+          type: 'error',
           title: 'Error',
           message: 'Username is required'
         });
         return;
       }
       if (!this.password) {
-        this.$notify.error({
+        this.$notify({
+          type: 'error',
           title: 'Error',
           message: 'Password is required'
         });

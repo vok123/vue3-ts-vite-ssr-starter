@@ -1,6 +1,6 @@
 <template>
   <div class="logo">
-    <img alt="Vue logo" src="./assets/img/logo.png">
+    <img alt="Vue logo" src="./assets/img/logo.png" />
     <h3>Vue3.0 Typescript Eslint SSR Starter</h3>
     <p>{{ time }}</p>
   </div>
@@ -9,7 +9,7 @@
     <router-link :to="{ name: 'user' }">Go to User</router-link>
     <router-link :to="{ name: 'market' }">Go to Market</router-link>
   </nav>
-  <hr>
+  <hr />
   <div class="container">
     <router-view v-slot="{ Component }">
       <Suspense>
@@ -35,7 +35,6 @@ export default defineComponent({
     }, 1000);
   }
 });
-
 </script>
 <style scoped>
 .logo {

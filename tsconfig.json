@@ -12,8 +12,7 @@
     "baseUrl": ".",
     "types": ["element-plus", "axios", "node", "vite/client"],
     "paths": {
-      "@/*": ["src/*"],
-      "@img/*": ["src/assets/img/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["src"]

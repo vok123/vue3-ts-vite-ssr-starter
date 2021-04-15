@@ -37,6 +37,23 @@ async function createServer(root = process.cwd(), isProd = isProduction) {
     );
   }
 
+  app.use('/justTest/getFruitList', async (req, res) => {
+    const names = ['Orange', 'Apricot', 'Apple', 'Plum', 'Pear', 'Pome', 'Banana', 'Cherry', 'Grapes', 'Peach'];
+    const list = names.map((name, id) => {
+      return {
+        id: ++id,
+        name,
+        price: Math.ceil(Math.random() * 100)
+      };
+    });
+    const data = {
+      data: list,
+      code: 0,
+      msg: ''
+    };
+    res.end(JSON.stringify(data));
+  });
+
   app.use('*', async (req, res) => {
     try {
       const url = req.originalUrl;
@@ -55,7 +72,10 @@ async function createServer(root = process.cwd(), isProd = isProduction) {
 
       const [appHtml, state, links] = await render(url, manifest);
 
-      const html = template.replace(`<!--preload-links-->`, links).replace(`'<vuex-state>'`, state).replace(`<!--app-html-->`, appHtml);
+      const html = template
+        .replace(`<!--preload-links-->`, links)
+        .replace(`'<vuex-state>'`, state)
+        .replace(`<!--app-html-->`, appHtml);
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e) {
@@ -76,5 +96,4 @@ if (!isTest) {
   );
 }
 
-// for test use
 exports.createServer = createServer;
