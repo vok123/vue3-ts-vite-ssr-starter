@@ -2,7 +2,7 @@ import App from './app.vue';
 import el from 'element-plus';
 import '@/assets/css/index.css';
 import createStore from './store/';
-import { createSSRApp } from 'vue';
+import { createApp } from 'vue';
 import { isPromise } from './utils';
 import createRouter from './router/';
 import { sync } from 'vuex-router-sync';
@@ -12,7 +12,7 @@ const router = createRouter();
 const store = createStore();
 sync(store, router);
 
-const app = createSSRApp(App);
+const app = createApp(App);
 app.use(router).use(store);
 app.use(el);
 
