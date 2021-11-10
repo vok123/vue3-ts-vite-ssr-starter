@@ -40,7 +40,7 @@ export async function render(url, manifest) {
   sync(store, router);
   const app = createSSRApp(App);
   app.use(router).use(store).use(el);
-  router.push(url);
+  await router.push(url);
   try {
     await router.isReady();
     const to = router.currentRoute;

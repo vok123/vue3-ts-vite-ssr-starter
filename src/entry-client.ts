@@ -41,7 +41,7 @@ router.beforeResolve((to, from, next) => {
         store,
         route: to
       };
-      if (isPromise(asyncData) === false) {
+      if (!isPromise(asyncData)) {
         return Promise.resolve(asyncData(config));
       }
       return asyncData(config);
