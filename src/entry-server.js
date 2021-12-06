@@ -1,5 +1,4 @@
 import App from './app.vue';
-import el from 'element-plus';
 import { createSSRApp } from 'vue';
 import createStore from './store/';
 import { isPromise } from './utils';
@@ -39,7 +38,7 @@ export async function render(url, manifest) {
   const store = createStore();
   sync(store, router);
   const app = createSSRApp(App);
-  app.use(router).use(store).use(el);
+  app.use(router).use(store);
   router.push(url);
   try {
     await router.isReady();

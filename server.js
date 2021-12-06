@@ -23,7 +23,11 @@ async function createServer(root = process.cwd(), isProd = isProduction) {
       root,
       logLevel: isTest ? 'error' : 'info',
       server: {
-        middlewareMode: true
+        middlewareMode: 'ssr',
+        watch: {
+          usePolling: true,
+          interval: 100
+        }
       }
     });
     // use vite's connect instance as middleware
@@ -66,7 +70,6 @@ async function createServer(root = process.cwd(), isProd = isProduction) {
         render = (await vite.ssrLoadModule('/src/entry-server.js')).render;
       } else {
         template = indexProd;
-        // @ts-ignore
         render = require('./dist/server/entry-server.js').render;
       }
 

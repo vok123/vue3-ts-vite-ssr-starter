@@ -1,12 +1,11 @@
 import App from './app.vue';
-import el from 'element-plus';
 import '@/assets/css/index.css';
 import createStore from './store/';
 import { createApp } from 'vue';
 import { isPromise } from './utils';
 import createRouter from './router/';
 import { sync } from 'vuex-router-sync';
-import 'element-plus/lib/theme-chalk/index.css';
+import 'element-plus/theme-chalk/base.css';
 
 const router = createRouter();
 const store = createStore();
@@ -14,7 +13,6 @@ sync(store, router);
 
 const app = createApp(App);
 app.use(router).use(store);
-app.use(el);
 
 router.beforeResolve((to, from, next) => {
   let diffed = false;
@@ -52,7 +50,7 @@ router.beforeResolve((to, from, next) => {
       next();
     });
   } catch (err) {
-    next(err);
+    next(err as any);
   }
 });
 
