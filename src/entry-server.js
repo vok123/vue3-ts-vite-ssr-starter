@@ -1,6 +1,6 @@
 import App from './app.vue';
 import { createSSRApp } from 'vue';
-import createStore from './store/';
+import createStore, { storeKey } from './store/';
 import { isPromise } from './utils';
 import createRouter from './router/';
 import { sync } from 'vuex-router-sync';
@@ -38,7 +38,7 @@ export async function render(url, manifest) {
   const store = createStore();
   sync(store, router);
   const app = createSSRApp(App);
-  app.use(router).use(store);
+  app.use(router).use(store, storeKey);
   router.push(url);
   try {
     await router.isReady();

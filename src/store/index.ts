@@ -1,24 +1,32 @@
+import { InjectionKey } from 'vue';
 import { RouteLocationNormalized, RouteLocationNormalizedLoaded } from 'vue-router';
-import { createStore, DispatchOptions, Store, useStore as vuexUseStore } from 'vuex';
-import market, { IMarketState, IMarketStore } from './modules/market';
-import user, { IUserState, IUserStore } from './modules/user';
+import { createStore, DispatchOptions, Store, useStore as baseUseStore } from 'vuex';
+import market, { IMarketState } from './modules/market';
+import user, { IUserState } from './modules/user';
+
+export interface IModules {
+  user: IUserState;
+  market: IMarketState;
+}
+
+export interface IRootState {
+  version: string;
+  route?: IRouterExtends;
+}
+
+type TRootStore = Store<IRootState & IModules>;
+
+export const storeKey = 'vuex-store' as unknown as InjectionKey<TRootStore>;
 
 interface IRouterExtends extends RouteLocationNormalized {
   from: RouteLocationNormalizedLoaded;
 }
-export interface IRootState {
-  user: IUserState;
-  market: IMarketState;
-  route: IRouterExtends;
-}
-
-export type IRootStore = IUserStore<Pick<IRootState, 'user'>> & IMarketStore<Pick<IRootState, 'market'>>;
 
 const storeDispatchWarp = (store: Store<IRootState>) => {
   const { dispatch } = store;
 
   store.dispatch = (type: string, payload: any, options?: DispatchOptions) => {
-    const { from } = store.state.route;
+    const { from } = store.state.route || {};
     if (from?.name || import.meta.env.SSR) {
       return dispatch(type, payload, options);
     }
@@ -31,21 +39,24 @@ const storeDispatchWarp = (store: Store<IRootState>) => {
 export default () => {
   const store = createStore<IRootState>({
     strict: true,
+    state: {
+      version: '1.0.0'
+    },
     modules: {
       user: user(),
       market: market()
     }
   });
 
-  return storeDispatchWarp(store);
+  return store || storeDispatchWarp(store);
 };
 
 export const useStore = () => {
-  return vuexUseStore<IRootState>();
+  return baseUseStore(storeKey);
 };
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $store: IRootStore;
+    $store: Store<TRootStore>;
   }
 }

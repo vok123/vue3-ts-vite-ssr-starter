@@ -1,4 +1,4 @@
-import { Module, Store } from 'vuex';
+import { Module } from 'vuex';
 import { IRootState } from '..';
 interface IUser {
   name: string;
@@ -40,4 +40,3 @@ export default () => {
   };
   return user;
 };
-export type IUserStore<S = IUserState> = Store<S>;

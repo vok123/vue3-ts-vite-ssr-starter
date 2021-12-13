@@ -1,5 +1,5 @@
 import { getFruitList, IFruitItem } from '@/api/market';
-import { Module, Store } from 'vuex';
+import { Module } from 'vuex';
 import { IRootState } from '..';
 export interface IMarketState {
   fruitList: IFruitItem[];
@@ -29,4 +29,3 @@ export default () => {
   };
   return market;
 };
-export type IMarketStore<S = IMarketState> = Store<S>;

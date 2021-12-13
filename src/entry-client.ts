@@ -1,6 +1,6 @@
 import App from './app.vue';
 import '@/assets/css/index.css';
-import createStore from './store/';
+import createStore, { storeKey } from './store/';
 import { createApp } from 'vue';
 import { isPromise } from './utils';
 import createRouter from './router/';
@@ -12,7 +12,7 @@ const store = createStore();
 sync(store, router);
 
 const app = createApp(App);
-app.use(router).use(store);
+app.use(router).use(store, storeKey);
 
 router.beforeResolve((to, from, next) => {
   let diffed = false;
