@@ -13,7 +13,7 @@ export interface IFruitItem {
 }
 
 export const getFruitList = async () => {
-  const { data } = await Axios.get<IResponse<IFruitItem>>('/justTest/getFruitList');
+  const { data } = await Axios.get<IResponse<IFruitItem[]>>('/justTest/getFruitList');
   if (data.code === 0) {
     return data.data;
   }

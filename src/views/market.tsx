@@ -1,26 +1,26 @@
-import { useStore } from '@/store';
 import { defineComponent } from 'vue';
 import '@/styles/market/index.scss';
+import { useMarket } from '@/store/market';
 
 export default defineComponent({
   name: 'Markets',
   async setup() {
-    const store = useStore();
-    await store.dispatch('market/getFruitList');
-    const { fruitList } = store.state.market;
+    const marketStore = useMarket();
+    await marketStore.getList();
+    const { fruitList } = marketStore;
 
     return { fruitList };
   },
   render() {
     return (
       <div>
-        <h2>FruitList</h2>
+        <h3>FruitList</h3>
         <table class="table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Price</th>
+              <th class="c-#67c23a">ID</th>
+              <th class="c-#e6a23c">Name</th>
+              <th class="c-#79bbff">Price</th>
             </tr>
           </thead>
 
@@ -28,9 +28,9 @@ export default defineComponent({
             {this.fruitList.map((item) => {
               return (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>${item.price}</td>
+                  <td class="c-#67c23a">{item.id}</td>
+                  <td class="c-#e6a23c">{item.name}</td>
+                  <td class="c-#79bbff">${item.price}</td>
                 </tr>
               );
             })}

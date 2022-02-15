@@ -2,7 +2,7 @@
   <div class="logo">
     <img alt="Vue logo" src="./assets/img/logo.png" />
     <h3>Vue3.0 Typescript Eslint SSR Starter</h3>
-    <p>{{ time }}</p>
+    <p class="c-#DB752D">{{ time }}</p>
   </div>
   <nav>
     <router-link :to="{ name: 'index' }">Go to Home</router-link>
@@ -10,7 +10,7 @@
     <router-link :to="{ name: 'market' }">Go to Market</router-link>
   </nav>
   <hr />
-  <div class="container">
+  <div class="container pt-12px pb-12px">
     <router-view v-slot="{ Component }">
       <Suspense>
         <component :is="Component" />
@@ -40,9 +40,7 @@ export default defineComponent({
 .logo {
   text-align: center;
 }
-.container {
-  padding: 10px 0;
-}
+
 nav {
   width: 500px;
   display: flex;

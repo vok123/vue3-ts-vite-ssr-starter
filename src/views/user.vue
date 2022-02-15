@@ -1,13 +1,13 @@
 <template>
   <div class="user">
-    User Page
+    <h3 class="mb-8px">User Page</h3>
     <div v-if="isLogin" class="info">
       <el-card class="box-card">
-        <div>User logged in</div>
-        <div>UserName: {{ userInfo.name }}</div>
+        <div class="mb-12px c-red">User logged in</div>
+        <div>UserName: <span class="c-#00f">{{ userInfo.name }}</span></div>
       </el-card>
     </div>
-    <el-form v-else class="form">
+    <el-form v-else label-position="top" class="form">
       <el-form-item label="UserName">
         <el-input v-model="params.userName" />
       </el-form-item>
@@ -24,7 +24,7 @@
 <script lang="ts">
 import { computed, defineComponent, reactive, ref } from 'vue';
 import { ElCard, ElForm, ElFormItem, ElButton, ElInput, ElNotification } from 'element-plus';
-import { useStore } from '@/store';
+import { useUser } from '@/store/user';
 
 export default defineComponent({
   name: 'User',
@@ -40,12 +40,10 @@ export default defineComponent({
       userName: '',
       password: ''
     });
-    const store = useStore();
-    const userInfo = computed(() => {
-      return store.state.user.userInfo;
-    });
+    const userStore = useUser();
     const loading = ref(false);
-    const isLogin = computed(() => !!userInfo.value.token);
+    const isLogin = computed(() => !!userStore.userInfo.token);
+    const userInfo = computed(() => userStore.userInfo);
     const submitHandle = () => {
       const { userName, password } = params;
       if (!userName) {
@@ -66,9 +64,9 @@ export default defineComponent({
       }
       loading.value = true;
       window.setTimeout(() => {
-        store.commit('user/updateUser', {
+        userStore.updateUser({
           name: userName,
-          userId: 1,
+          userId: '1',
           token: Math.random().toString(36).slice(-8)
         });
         loading.value = false;

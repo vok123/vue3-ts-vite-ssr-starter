@@ -1,10 +1,9 @@
 import App from './app.vue';
 import { createSSRApp } from 'vue';
-import createStore, { storeKey } from './store/';
 import { isPromise } from './utils';
 import createRouter from './router/';
-import { sync } from 'vuex-router-sync';
 import { renderToString } from '@vue/server-renderer';
+import { createPinia } from 'pinia';
 
 function renderPreloadLinks(modules, manifest) {
   let links = '';
@@ -35,10 +34,9 @@ function renderPreloadLink(file) {
 
 export async function render(url, manifest) {
   const router = createRouter();
-  const store = createStore();
-  sync(store, router);
+  const store = createPinia();
   const app = createSSRApp(App);
-  app.use(router).use(store, storeKey);
+  app.use(router).use(store);
   router.push(url);
   try {
     await router.isReady();
@@ -55,7 +53,7 @@ export async function render(url, manifest) {
       const asyncData = component.asyncData || null;
       if (asyncData) {
         const config = {
-          store,
+          store: store.value,
           route: to
         };
         if (isPromise(asyncData) === false) {
@@ -69,7 +67,7 @@ export async function render(url, manifest) {
     const ctx = {};
     const html = await renderToString(app, ctx);
     const preloadLinks = renderPreloadLinks(ctx.modules, manifest);
-    const state = JSON.stringify(store.state);
+    const state = JSON.stringify(store.state.value);
     return [html, state, preloadLinks];
   } catch (error) {
     console.log(error);

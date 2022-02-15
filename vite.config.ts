@@ -6,6 +6,9 @@ import Components from 'unplugin-vue-components/vite';
 import vueJsxPlugin from '@vitejs/plugin-vue-jsx';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import visualizer from 'rollup-plugin-visualizer';
+import unocss from 'unocss/vite';
+import presetMini from '@unocss/preset-mini';
+import AutoImport from 'unplugin-auto-import/vite';
 
 export default ({ command }) => {
   const config: UserConfig = {
@@ -16,12 +19,15 @@ export default ({ command }) => {
         cache: false,
         include: ['src/**/*.vue', 'src/**/*.ts', 'src/**/*.tsx']
       }),
+      unocss({
+        presets: [presetMini()]
+      }),
       Components({
-        dts: true,
-        globalNamespaces: ['global'],
-        include: [/\.vue$/],
-        resolvers: [ElementPlusResolver({ ssr: true, importStyle: 'css' })],
+        resolvers: [ElementPlusResolver({ ssr: true })],
         directoryAsNamespace: true
+      }),
+      AutoImport({
+        resolvers: [ElementPlusResolver({ ssr: true })]
       })
     ],
     server: {
