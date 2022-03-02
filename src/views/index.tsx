@@ -1,4 +1,3 @@
-import { defineComponent, ref } from 'vue';
 import { ElSwitch } from 'element-plus';
 import 'element-plus/theme-chalk/el-switch.css';
 

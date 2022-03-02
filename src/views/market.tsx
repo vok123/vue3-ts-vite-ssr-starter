@@ -1,4 +1,3 @@
-import { defineComponent } from 'vue';
 import '@/styles/market/index.scss';
 import { useMarket } from '@/store/market';
 

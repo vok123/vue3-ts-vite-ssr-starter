@@ -27,6 +27,7 @@ export default ({ command }) => {
         directoryAsNamespace: true
       }),
       AutoImport({
+        imports: ['vue', 'vue-router', 'pinia'],
         resolvers: [ElementPlusResolver({ ssr: true })]
       })
     ],
@@ -43,7 +44,7 @@ export default ({ command }) => {
   if (command === 'build') {
     config.plugins.push(
       visualizer({
-        open: true,
+        open: false,
         gzipSize: true,
         brotliSize: true
       })

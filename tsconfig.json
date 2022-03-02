@@ -11,9 +11,9 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "types": ["axios", "node", "vite/client"],
+    "typeRoots": ["."],
     "paths": {
       "@/*": ["src/*"]
     }
-  },
-  "include": ["src"]
+  }
 }

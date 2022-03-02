@@ -22,7 +22,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from 'vue';
 import { ElCard, ElForm, ElFormItem, ElButton, ElInput, ElNotification } from 'element-plus';
 import { useUser } from '@/store/user';
 
