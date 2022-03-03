@@ -53,7 +53,7 @@ export async function render(url, manifest) {
       const asyncData = component.asyncData || null;
       if (asyncData) {
         const config = {
-          store: store.value,
+          store,
           route: to
         };
         if (isPromise(asyncData) === false) {
