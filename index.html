@@ -3,14 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Vue3 App</title>
     <!--preload-links-->
   </head>
   <body>
+    <!--app-teleports-->
     <div id="app"><!--app-html--></div>
     <script type="module" src="/src/entry-client.ts"></script>
     <script>
-      window.__INITIAL_STATE__ = '<vuex-state>';
+      window.__INITIAL_STATE__ = '<pinia-store>';
     </script>
   </body>
 </html>

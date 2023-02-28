@@ -3,15 +3,18 @@ import { useMarket } from '@/store/market';
 
 export default defineComponent({
   name: 'Markets',
+  async serverPrefetch() {},
   async setup() {
     const marketStore = useMarket();
-    await marketStore.getList();
-    const { fruitList } = marketStore;
+    onServerPrefetch(async () => {
+      await marketStore.getList();
+    });
 
-    return { fruitList };
-  },
-  render() {
-    return (
+    onMounted(() => {
+      marketStore.getList();
+    });
+
+    return () => (
       <div>
         <h3>FruitList</h3>
         <table class="table">
@@ -24,12 +27,12 @@ export default defineComponent({
           </thead>
 
           <tbody>
-            {this.fruitList.map((item) => {
+            {marketStore.fruitList.map((item) => {
               return (
                 <tr key={item.id}>
                   <td class="c-#67c23a">{item.id}</td>
                   <td class="c-#e6a23c">{item.name}</td>
-                  <td class="c-#79bbff">${item.price}</td>
+                  <td class="c-#79bbff">{'$' + item.price}</td>
                 </tr>
               );
             })}

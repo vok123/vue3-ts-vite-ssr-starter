@@ -1,41 +1,45 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-const fs = require('fs');
-const path = require('path');
-const express = require('express');
-const axios = require('axios');
+import fs from 'node:fs';
+import path from 'node:path';
+import express from 'express';
+import axios from 'axios';
+import { fileURLToPath } from 'node:url';
+import adapter from 'axios/lib/adapters/http.js';
 
-axios.defaults.adapter = require('axios/lib/adapters/http');
-
+axios.defaults.adapter = adapter;
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD;
 const isProduction = process.env.NODE_ENV === 'production';
-async function createServer(root = process.cwd(), isProd = isProduction) {
+export async function createServer(root = process.cwd(), isProd = isProduction) {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const resolve = (p) => path.resolve(__dirname, p);
   const indexProd = isProd ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8') : '';
-
+  const manifest = isProd ? JSON.parse(fs.readFileSync(resolve('dist/client/ssr-manifest.json'), 'utf-8')) : {};
   // @ts-ignore
-  const manifest = isProd ? require('./dist/client/ssr-manifest.json') : {};
 
   const app = express();
 
   let vite;
   if (!isProd) {
-    vite = await require('vite').createServer({
+    vite = await (
+      await import('vite')
+    ).createServer({
       root,
       logLevel: isTest ? 'error' : 'info',
       server: {
-        middlewareMode: 'ssr',
+        middlewareMode: true,
         watch: {
           usePolling: true,
           interval: 100
         }
-      }
+      },
+      appType: 'custom'
     });
     // use vite's connect instance as middleware
     app.use(vite.middlewares);
   } else {
-    app.use(require('compression')());
+    app.use((await import('compression')).default());
     app.use(
-      require('serve-static')(resolve('dist/client'), {
+      (await import('serve-static')).default(resolve('dist/client'), {
         index: false
       })
     );
@@ -67,18 +71,19 @@ async function createServer(root = process.cwd(), isProd = isProduction) {
         // always read fresh template in dev
         template = fs.readFileSync(resolve('index.html'), 'utf-8');
         template = await vite.transformIndexHtml(url, template);
-        render = (await vite.ssrLoadModule('/src/entry-server.js')).render;
+        render = (await vite.ssrLoadModule('/src/entry-server')).render;
       } else {
         template = indexProd;
-        render = require('./dist/server/entry-server.js').render;
+        render = (await import('./dist/server/entry-server.js')).render;
       }
 
-      const [appHtml, state, links] = await render(url, manifest);
+      const [appHtml, state, links, teleports] = await render(url, manifest);
 
       const html = template
         .replace(`<!--preload-links-->`, links)
-        .replace(`'<vuex-state>'`, state)
-        .replace(`<!--app-html-->`, appHtml);
+        .replace(`'<pinia-store>'`, state)
+        .replace(`<!--app-html-->`, appHtml)
+        .replace(/(\n|\r\n)\s*<!--app-teleports-->/, teleports);
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e) {
@@ -98,5 +103,3 @@ if (!isTest) {
     })
   );
 }
-
-exports.createServer = createServer;
