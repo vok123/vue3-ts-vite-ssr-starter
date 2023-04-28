@@ -1,7 +1,6 @@
 import 'uno.css';
 import { renderToString } from 'vue/server-renderer';
 import { createApp } from './main';
-import { ID_INJECTION_KEY } from 'element-plus';
 
 function renderPreloadLinks(modules, manifest) {
   let links = '';
@@ -39,12 +38,9 @@ function renderTeleports(teleports) {
     return all;
   }, teleports.body || '');
 }
+
 export async function render(url, manifest) {
   const { app, router, store } = createApp();
-  app.provide(ID_INJECTION_KEY, {
-    prefix: 1024,
-    current: 0
-  });
   try {
     await router.push(url);
     await router.isReady();
